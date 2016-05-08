@@ -24,6 +24,27 @@ ul{
 	cursor: pointer;
 }
 
+.savedItem{
+	position: relative;
+	margin: 5px 0;
+}
+
+.savedItem button{
+	z-index: 2;
+	position: absolute;
+    right: 5px;
+    top:10px;
+    cursor: pointer;
+}
+
+.savedItem button:before{
+	content: "\2718";
+}
+
+.myFoods{
+    display: flex;
+    flex-direction: column;
+}
 
 /* Accordion */
 .section {
@@ -32,6 +53,9 @@ ul{
  border:1px solid #cecece;
 }
 
+.section.open{
+	background: rgb(251, 251, 251);
+}
 
 .section.open button:before, .section.open button:after {
   height: 14px;
@@ -44,6 +68,8 @@ ul{
 }
 .section.open > .articlewrap {
   height: auto;
+    /*height: 400px;*/
+    /*overflow: scroll;*/
 }
 
 .articlewrap {
@@ -53,13 +79,20 @@ ul{
 }
 
 .sectionhead {
-  overflow: hidden;
   cursor: pointer;
-  font-weight: 700;
-  color: #888;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 1em;
+  display: block;
+  padding: 5px;
+  color: #4D4D4D;
+  font-size: 16px;
+  border-bottom: 1px solid #CCC;
+  position: relative;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.sectionhead:hover{
+	background: #EFEFEF;
 }
 
 .article {

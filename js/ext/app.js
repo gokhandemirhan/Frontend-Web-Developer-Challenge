@@ -22,8 +22,11 @@ var SearchForm = React.createClass({
   },
   handledeleteAll:function(){
     //alert here
-    localStorage.setItem('SelectedFoods', JSON.stringify([]));
-    this.setState({ myFoods: []});
+    var r = confirm("Do you want to delete all of "+this.state.myFoods.length+" meals?");
+    if (r == true) {
+      localStorage.setItem('SelectedFoods', JSON.stringify([]));
+      this.setState({ myFoods: []});
+    }
   },
   render:function(){
     var that = this;
@@ -32,13 +35,13 @@ var SearchForm = React.createClass({
         <div className="results"><h2>Search Food: </h2>
         <input type="text" placeholder="Search for a food"
               onChange={that.onChangeHandler} />{ this.state.isLoading ? <div className="loader"></div> : null }
-        <ul className="suggestions">{this.state.data.map(function(m){
-              return <SearchResultItem key={m.ID} item={m} add={that.handleAdd}/>
+        <ul className="suggestions">{this.state.data.map(function(m,i){
+              return <SearchResultItem key={i} item={m} add={that.handleAdd}/>
           })}
           </ul>
           </div>
         <div className="myFoods"><h2>Selected Foods:{that.state.myFoods.length}</h2><button onClick={this.handledeleteAll}>delete all</button>
-          {this.state.myFoods.map(function(b){return <SavedFoodsItem key={b.ID} item={b} deleteHandler={that.handleDelete}/>})}
+          {this.state.myFoods.map(function(b,l){return <SavedFoodsItem key={l} item={b} deleteHandler={that.handleDelete}/>})}
           </div>
           </div>
       </div>);
@@ -108,15 +111,18 @@ var SavedFoodsItem = React.createClass({
     this.props.deleteHandler(this.props.item)
   },
   render:function(){
-    return <div><button onClick={this.handleDelete}>delete food</button><Section title={this.props.item.Name}> <br/>Portions: {this.props.item.Portions.map(function(p, i){
+    return <div className="savedItem"><button onClick={this.handleDelete}></button><Section title={this.props.item.Name}><h4>Portions:</h4> {this.props.item.Portions.map(function(p, i){
       var nutrients = p['nutrients']; 
       return <Section title={p['name']} key={i}>{
         Object.keys(nutrients).map(function (key, t) {
-          return <Section title={key} key={t}>{
-            Object.keys(nutrients[key]).map(function (key2, m) {
-              return <Section title={key2} key={m}>{nutrients[key][key2] != null ? nutrients[key][key2]["value"] + nutrients[key][key2]["unit"] : "0"}</Section>
-            })
-          }</Section>
+          if(!(Object.keys(nutrients[key]).length === 0 || nutrients[key].length === 0)){
+            return <Section title={key} key={t}>{
+              Object.keys(nutrients[key]).map(function (key2, m) {
+                //return <Section title={key2} key={m}>{nutrients[key][key2] != null ? nutrients[key][key2]["value"] + nutrients[key][key2]["unit"] : "0"}</Section>
+                return (<div key={m}>{key2} : {<span className="bold">{ nutrients[key][key2] != null ? nutrients[key][key2]["value"] + nutrients[key][key2]["unit"] : "0"}</span>}</div>)
+              })
+            }</Section>
+          }
         })
       }
     </Section>})}</Section></div>
