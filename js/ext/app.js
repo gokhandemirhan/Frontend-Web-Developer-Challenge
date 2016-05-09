@@ -1,3 +1,6 @@
+/*  Main search component. This holds state
+    and handles the add/delete operations
+*/
 var SearchForm = React.createClass({
   getInitialState: function () {
     return {
@@ -12,7 +15,6 @@ var SearchForm = React.createClass({
     foods.push(item);
     localStorage.setItem('SelectedFoods', JSON.stringify(foods));
     this.setState({ myFoods: foods });
-    //console.log(item);
   },
   handleDelete:function(item){
     var foods = this.props.myFoods;
@@ -47,17 +49,17 @@ var SearchForm = React.createClass({
       </div>);
   },
   onChangeHandler:function(e){
-     var word = e.target.value,
+    var word = e.target.value,
          that = this;
-
     if(word !== ""){
+      //clear timeout to prevent search for every word.
       clearTimeout(this.state.timer);
       this.setState({ isLoading: true});
       this.state.timer = setTimeout(function() {
         query(word).then(function(data){
           that.setState({ isLoading: false});
-          //console.log(data);
           data = JSON.parse(data);
+          //create a new object to eliminate unnecessary properties.
           var items = data.map(function(n){return {ID:n._id,Name:n.name,  Portions:n.portions}});
           that.setState({data: items});
         });
@@ -65,11 +67,11 @@ var SearchForm = React.createClass({
     }else{
       that.setState({data: []});
     }
-  }
-                                   
+  }                                
 });
 
-
+/*  Query function to query the API
+*/
 var query = function(word) {
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
@@ -94,7 +96,10 @@ var query = function(word) {
   });
 }
 
-
+/*  Search results item to handle results
+    This delegates the delere event to SearchForm
+    component.
+*/
 var SearchResultItem = React.createClass({
   handleAdd:function(){
     this.props.add(this.props.item)
@@ -105,7 +110,9 @@ var SearchResultItem = React.createClass({
   
 });
 
-
+/*  Saved meal item to handle meal details.
+    Added meals are rendered in an accordion form.
+*/
 var SavedFoodsItem = React.createClass({
   handleDelete:function(){
     this.props.deleteHandler(this.props.item)
@@ -117,8 +124,8 @@ var SavedFoodsItem = React.createClass({
         Object.keys(nutrients).map(function (key, t) {
           if(!(Object.keys(nutrients[key]).length === 0 || nutrients[key].length === 0)){
             return <Section title={key} key={t}>{
+              //Iterationception
               Object.keys(nutrients[key]).map(function (key2, m) {
-                //return <Section title={key2} key={m}>{nutrients[key][key2] != null ? nutrients[key][key2]["value"] + nutrients[key][key2]["unit"] : "0"}</Section>
                 return (<div key={m}>{key2} : {<span className="bold">{ nutrients[key][key2] != null ? nutrients[key][key2]["value"] + nutrients[key][key2]["unit"] : "0"}</span>}</div>)
               })
             }</Section>
@@ -129,7 +136,8 @@ var SavedFoodsItem = React.createClass({
   }
 });
 
-
+/*  Global accordion component.
+*/
 var Section = React.createClass({
   handleClick: function(){
     if(this.state.open) {
@@ -164,6 +172,6 @@ var Section = React.createClass({
   }
 });
 
-
+//Init
 var selectedFoods = JSON.parse(localStorage.getItem('SelectedFoods')) || [];
 ReactDOM.render(<SearchForm myFoods={selectedFoods}/>, document.getElementById('container'));

@@ -1,62 +1,58 @@
-.cont{
-	display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+.cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
-input{
-	padding: 10px;
-	width: 100%;
-	font-size: 14px;
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
 }
 
-ul{
-	list-style: none;
-	padding: 0;
+ul {
+  list-style: none;
+  padding: 0;
 }
 
-.suggestions li{
-	padding: 10px;
-	border-bottom: 1px solid #cecece;
+.suggestions li {
+  padding: 10px;
+  border-bottom: 1px solid #cecece;
 }
-.suggestions  li:hover{
-	background-color: #cecece;
-	cursor: pointer;
-}
-
-.savedItem{
-	position: relative;
-	margin: 5px 0;
+.suggestions li:hover {
+  background-color: #cecece;
+  cursor: pointer;
 }
 
-.savedItem button{
-	z-index: 2;
-	position: absolute;
-    right: 5px;
-    top:10px;
-    cursor: pointer;
+.savedItem {
+  position: relative;
+  margin: 5px 0;
+}
+.savedItem button {
+  z-index: 2;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  cursor: pointer;
+}
+.savedItem button:before {
+  content: "\2718";
 }
 
-.savedItem button:before{
-	content: "\2718";
-}
-
-.myFoods{
-    display: flex;
-    flex-direction: column;
+.myFoods {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Accordion */
 .section {
   position: relative;
   width: 100%;
- border:1px solid #cecece;
+  border: 1px solid #cecece;
 }
-
-.section.open{
-	background: rgb(251, 251, 251);
+.section.open {
+  background: #fbfbfb;
 }
-
 .section.open button:before, .section.open button:after {
   height: 14px;
 }
@@ -68,8 +64,8 @@ ul{
 }
 .section.open > .articlewrap {
   height: auto;
-    /*height: 400px;*/
-    /*overflow: scroll;*/
+  /*height: 400px;*/
+  /*overflow: scroll;*/
 }
 
 .articlewrap {
@@ -90,9 +86,8 @@ ul{
   -o-transition: all 0.4s ease;
   transition: all 0.4s ease;
 }
-
-.sectionhead:hover{
-	background: #EFEFEF;
+.sectionhead:hover {
+  background: #EFEFEF;
 }
 
 .article {
@@ -100,7 +95,6 @@ ul{
   color: #333;
   line-height: 1.3;
 }
-
 
 /*Loader*/
 .loader {
@@ -111,14 +105,14 @@ ul{
   height: 11em;
   border-radius: 50%;
   background: #00e1ff;
-  background: -moz-linear-gradient(left, #00e1ff 10%, rgba(0,225,255, 0) 42%);
-  background: -webkit-linear-gradient(left, #00e1ff 10%, rgba(0,225,255, 0) 42%);
-  background: -o-linear-gradient(left, #00e1ff 10%, rgba(0,225,255, 0) 42%);
-  background: -ms-linear-gradient(left, #00e1ff 10%, rgba(0,225,255, 0) 42%);
-  background: linear-gradient(to right, #00e1ff 10%, rgba(0,225,255, 0) 42%);
+  background: -moz-linear-gradient(left, #00e1ff 10%, rgba(0, 225, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #00e1ff 10%, rgba(0, 225, 255, 0) 42%);
+  background: -o-linear-gradient(left, #00e1ff 10%, rgba(0, 225, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #00e1ff 10%, rgba(0, 225, 255, 0) 42%);
+  background: linear-gradient(to right, #00e1ff 10%, rgba(0, 225, 255, 0) 42%);
   position: relative;
-  -webkit-animation: load3 1.4s infinite linear;
-  animation: load3 1.4s infinite linear;
+  -webkit-animation: spinn 1.4s infinite linear;
+  animation: spinn 1.4s infinite linear;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
@@ -146,7 +140,8 @@ ul{
   bottom: 0;
   right: 0;
 }
-@-webkit-keyframes load3 {
+
+@-webkit-keyframes spinn {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
@@ -156,7 +151,7 @@ ul{
     transform: rotate(360deg);
   }
 }
-@keyframes load3 {
+@keyframes spinn {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
